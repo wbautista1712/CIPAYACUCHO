@@ -36,8 +36,7 @@ public class ComprobantePago implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idComprobantePago")
-    private Collection<Pago> pagoCollection;
+
 
 
 }

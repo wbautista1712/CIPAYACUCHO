@@ -37,11 +37,7 @@ public class Provincia implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProvincia")
-    private Collection<Distrito> distritoCollection;
-    @JoinColumn(name = "idDepartamento", referencedColumnName = "idDepartamento")
-    @ManyToOne(optional = false)
-    private Departamento idDepartamento;
+
 
 
 }

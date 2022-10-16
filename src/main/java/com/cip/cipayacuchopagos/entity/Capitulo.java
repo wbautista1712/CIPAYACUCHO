@@ -36,7 +36,6 @@ public class Capitulo implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCapitulo")
-    private Collection<Especialidad> especialidadCollection;
+
 
 }

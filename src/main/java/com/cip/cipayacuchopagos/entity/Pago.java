@@ -55,10 +55,6 @@ public class Pago implements Serializable {
     @JoinColumn(name = "idComprobantePago", referencedColumnName = "idComprobantePago")
     @ManyToOne(optional = false)
     private ComprobantePago idComprobantePago;
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
-    @ManyToOne(optional = false)
-    private Usuario idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPago")
-    private Collection<DetallePago> detallePagoCollection;
+
 
 }

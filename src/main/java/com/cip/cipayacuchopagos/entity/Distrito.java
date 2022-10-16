@@ -39,9 +39,7 @@ public class Distrito implements Serializable {
     private boolean estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDistrito")
     private Collection<Usuario> usuarioCollection;
-    @JoinColumn(name = "idProvincia", referencedColumnName = "idProvincia")
-    @ManyToOne(optional = false)
-    private Provincia idProvincia;
+
 
 
 }

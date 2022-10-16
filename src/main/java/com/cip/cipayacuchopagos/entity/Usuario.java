@@ -60,19 +60,7 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "idCategoriaCIP", referencedColumnName = "idCategoriaCIP")
     @ManyToOne(optional = false)
     private CategoriaCIP idCategoriaCIP;
-    @JoinColumn(name = "idDistrito", referencedColumnName = "idDistrito")
-    @ManyToOne(optional = false)
-    private Distrito idDistrito;
-    @JoinColumn(name = "idEspecialidad", referencedColumnName = "idEspecialidad")
-    @ManyToOne(optional = false)
-    private Especialidad idEspecialidad;
-    @JoinColumn(name = "idTipoDocumento", referencedColumnName = "idTipoDocumento")
-    @ManyToOne(optional = false)
-    private TipoDocumento idTipoDocumento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private Collection<Colegiatura> colegiaturaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private Collection<Pago> pagoCollection;
+
 
 
     

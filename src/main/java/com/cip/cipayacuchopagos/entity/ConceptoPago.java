@@ -51,8 +51,7 @@ public class ConceptoPago implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idConceptoPago")
-    private Collection<DetallePago> detallePagoCollection;
+
 
 
     

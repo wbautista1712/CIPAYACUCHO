@@ -41,12 +41,7 @@ public class DetallePago implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @JoinColumn(name = "idConceptoPago", referencedColumnName = "idConceptoPago")
-    @ManyToOne(optional = false)
-    private ConceptoPago idConceptoPago;
-    @JoinColumn(name = "idPago", referencedColumnName = "idPago")
-    @ManyToOne(optional = false)
-    private Pago idPago;
+
 
 
     

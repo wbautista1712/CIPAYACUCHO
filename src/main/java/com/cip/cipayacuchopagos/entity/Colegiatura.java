@@ -36,9 +36,6 @@ public class Colegiatura implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
-    @ManyToOne(optional = false)
-    private Usuario idUsuario;
 
 
 }
