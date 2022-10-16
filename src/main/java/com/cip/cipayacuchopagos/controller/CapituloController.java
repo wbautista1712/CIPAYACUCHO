@@ -43,12 +43,10 @@ public class CapituloController   {
 
     @GetMapping(value = "/obtenerCapitulo")
     public ResponseEntity<List<Capitulo>> obtenerCapitulo() {
-        LOGGER.info("obtenerCapitulo " );
+        LOGGER.info(".. ::obtenerCapitulo::.." );
 
         List<Capitulo> result = this.capituloService.getAll();
         LOGGER.info("result " + result.size());
-
-
 
         return ResponseEntity.ok().body(result);
 
