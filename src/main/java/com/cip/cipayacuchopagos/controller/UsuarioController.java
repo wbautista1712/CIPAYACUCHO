@@ -5,17 +5,17 @@
  */
 package com.cip.cipayacuchopagos.controller;
 
+import com.cip.cipayacuchopagos.entity.Provincia;
 import com.cip.cipayacuchopagos.entity.Usuario;
 import com.cip.cipayacuchopagos.service.UsuarioService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 /**
@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(path = "/api/wmsmysql")
+@RequestMapping(path = "/api/cipayacucho")
 @CrossOrigin(origins = "*")
 public class UsuarioController implements Serializable {
     private static final Logger LOGGER = LogManager.getLogger(UsuarioController.class);
@@ -38,9 +38,14 @@ public class UsuarioController implements Serializable {
         List<Usuario> result = this.usuarioService.getAll();
         LOGGER.info("result " + result.size());
 
-
-
         return ResponseEntity.ok().body(result);
 
+    }
+
+    @PostMapping(value = "/crearUsuario")
+    public ResponseEntity<?> crearUsuario(@Valid @RequestBody Usuario usuario) {
+        LOGGER.info("crearUsuario " + usuario.toString());
+        usuarioService.save(usuario);
+        return new ResponseEntity<>("Insertado correctamente", HttpStatus.OK);
     }
 }

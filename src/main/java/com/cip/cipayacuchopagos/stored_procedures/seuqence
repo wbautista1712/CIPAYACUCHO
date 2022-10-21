@@ -2,3 +2,22 @@
 CREATE SEQUENCE seq_Comprobante_Pago
     START WITH 1
     INCREMENT BY 1 ;
+
+CREATE SEQUENCE seq_Usuario
+    START WITH 1
+    INCREMENT BY 1 ;
+
+CREATE SEQUENCE seq_Provincia
+    START WITH 1
+    INCREMENT BY 1 ;
+
+
+
+CREATE SEQUENCE seq_departamento
+    START WITH 1
+    INCREMENT BY 1 ;
+
+
+CREATE SEQUENCE seq_Provincia
+    START WITH 1
+    INCREMENT BY 1 ;

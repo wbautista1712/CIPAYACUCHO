@@ -5,6 +5,7 @@
  */
 package com.cip.cipayacuchopagos.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,31 +26,33 @@ import java.util.Date;
 @Data
 @ToString
 @RequiredArgsConstructor
-@Table(name = "ConceptoPago", schema = "dbo")
+@Table(name = "Conceptopago", schema = "dbo")
 
 public class ConceptoPago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Pago")
-    @SequenceGenerator(name = "generator_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
-    @Column(name = "idConceptoPago")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Concepto_Pago")
+    @SequenceGenerator(name = "generator_Concepto_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
+    @Column(name = "idconceptopago")
     private Integer idConceptoPago;
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
-    @Column(name = "fechaCreacion")
+    @Column(name = "fechacreacion")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
+    private Date fechacreacion;
 
     @Basic(optional = false)
-    @Column(name = "montoUnitario")
-    private BigDecimal montoUnitario;
+    @Column(name = "montounitario")
+    private BigDecimal montounitario;
     @Basic(optional = false)
-    @Column(name = "fechaModificacion")
+    @Column(name = "fechamodificacion")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
+    private Date fechamodificacion;
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;

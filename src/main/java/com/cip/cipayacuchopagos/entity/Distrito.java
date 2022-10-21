@@ -32,7 +32,7 @@ public class Distrito implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Distrito")
     @SequenceGenerator(name = "generator_Distrito", sequenceName = "seq_Distrito", allocationSize = 1)
     @Column(name = "iddistrito")
-    private String iddistrito;
+    private Integer iddistrito;
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;

@@ -29,10 +29,10 @@ public class Provincia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Pago")
-    @SequenceGenerator(name = "generator_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
-    @Column(name = "idProvincia")
-    private String idProvincia;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Provincia")
+    @SequenceGenerator(name = "generator_Provincia", sequenceName = "seq_Provincia", allocationSize = 1)
+    @Column(name = "idprovincia")
+    private Integer idprovincia;
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;
@@ -40,6 +40,7 @@ public class Provincia implements Serializable {
     @Column(name = "estado")
     private boolean estado;
 
-
+    @Column(name = "iddepartamento")
+    private Integer iddepartamento;
 
 }

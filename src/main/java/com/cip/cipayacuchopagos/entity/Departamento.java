@@ -29,10 +29,10 @@ public class Departamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Pago")
-    @SequenceGenerator(name = "generator_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
-    @Column(name = "idDepartamento")
-    private String idDepartamento;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Departamento")
+    @SequenceGenerator(name = "generator_Departamento", sequenceName = "seq_Departamento", allocationSize = 1)
+    @Column(name = "iddepartamento")
+    private Integer iddepartamento;
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;

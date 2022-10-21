@@ -28,20 +28,22 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idUsuario")
-    private Integer idUsuario;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Usuario")
+    @SequenceGenerator(name = "generator_Usuario", sequenceName = "seq_Usuario", allocationSize = 1)
+    @Column(name = "idusuario")
+    private Integer idusuario;
     @Basic(optional = false)
-    @Column(name = "apPaterno")
-    private String apPaterno;
+    @Column(name = "appaterno")
+    private String appaterno;
     @Basic(optional = false)
-    @Column(name = "apMaterno")
-    private String apMaterno;
+    @Column(name = "apmaterno")
+    private String apmaterno;
     @Basic(optional = false)
     @Column(name = "nombres")
     private String nombres;
     @Basic(optional = false)
-    @Column(name = "nroDocumento")
-    private String nroDocumento;
+    @Column(name = "nrodocumento")
+    private String nrodocumento;
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
@@ -58,8 +60,15 @@ public class Usuario implements Serializable {
     @Column(name = "estado")
     private boolean estado;
 
+    @Column(name = "iddistrito")
+    private Integer iddistrito;
 
+    @Column(name = "idcategoriacip")
+    private Integer idcategoriacip;
 
+    @Column(name = "idespecialidad")
+    private Integer idespecialidad;
 
-    
+    @Column(name = "idtipodocumento")
+    private Integer idTipoDocumento;
 }
