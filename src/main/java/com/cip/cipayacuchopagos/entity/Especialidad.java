@@ -29,16 +29,18 @@ public class Especialidad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idEspecialidad")
-    private Integer idEspecialidad;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Especialidad")
+    @SequenceGenerator(name = "generator_Especialidad", sequenceName = "seq_Especialidad", allocationSize = 1)
+    @Column(name = "idespecialidad")
+    private Integer idespecialidad;
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-
-
-
+    @Basic(optional = false)
+    @Column(name = "idcapitulo")
+    private Integer idcapitulo;
     
 }

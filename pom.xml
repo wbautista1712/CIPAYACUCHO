@@ -8,6 +8,7 @@
         <version>2.7.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.example</groupId>
     <artifactId>CIPAyacuchoPagos</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -54,6 +55,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
         </dependency>
     </dependencies>
 

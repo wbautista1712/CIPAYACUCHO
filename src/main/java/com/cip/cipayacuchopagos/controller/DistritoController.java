@@ -5,17 +5,17 @@
  */
 package com.cip.cipayacuchopagos.controller;
 
+import com.cip.cipayacuchopagos.entity.ComprobantePago;
 import com.cip.cipayacuchopagos.entity.Distrito;
 import com.cip.cipayacuchopagos.service.DistritoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 /**
@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(path = "/api/wmsmysql")
+@RequestMapping(path = "/api/cipayacucho")
 @CrossOrigin(origins = "*")
 
 public class DistritoController implements Serializable {
@@ -40,9 +40,13 @@ public class DistritoController implements Serializable {
         List<Distrito> result = this.distritoService.getAll();
         LOGGER.info("result " + result.size());
 
-
-
         return ResponseEntity.ok().body(result);
 
+    }
+
+    @PostMapping(value = "/crearDistrito")
+    public ResponseEntity<?> crearDistrito(@Valid @RequestBody Distrito distrito) {
+        distritoService.save(distrito);
+        return new ResponseEntity<>("Insertado correctamente", HttpStatus.OK);
     }
 }

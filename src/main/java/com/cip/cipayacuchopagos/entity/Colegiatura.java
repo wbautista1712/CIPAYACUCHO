@@ -28,8 +28,10 @@ public class Colegiatura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idColegiatura")
-    private Integer idColegiatura;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Colegiatura")
+    @SequenceGenerator(name = "generator_Colegiatura", sequenceName = "seq_Colegiatura", allocationSize = 1)
+    @Column(name = "idcolegiatura")
+    private Integer idcolegiatura;
     @Basic(optional = false)
     @Column(name = "numero")
     private String numero;
@@ -37,5 +39,6 @@ public class Colegiatura implements Serializable {
     @Column(name = "estado")
     private boolean estado;
 
-
+    @Column(name = "idusuario")
+    private Integer idusuario;
 }

@@ -6,16 +6,16 @@
 package com.cip.cipayacuchopagos.controller;
 
 import com.cip.cipayacuchopagos.entity.Capitulo;
+import com.cip.cipayacuchopagos.entity.ComprobantePago;
 import com.cip.cipayacuchopagos.service.CapituloService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 /**
  *
@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(path = "/api/wmsmysql")
+@RequestMapping(path = "/api/cipayacucho")
 @CrossOrigin(origins = "*")
 public class CapituloController   {
     private static final Logger LOGGER = LogManager.getLogger(CapituloController.class);
@@ -41,6 +41,11 @@ public class CapituloController   {
         LOGGER.info("result " + result.size());
 
         return ResponseEntity.ok().body(result);
+    }
 
+    @PostMapping(value = "/crearCapitulo")
+    public ResponseEntity<?> crearCapitulo(@Valid @RequestBody Capitulo capitulo) {
+        capituloService.save(capitulo);
+        return new ResponseEntity<>("Insertado correctamente", HttpStatus.OK);
     }
 }

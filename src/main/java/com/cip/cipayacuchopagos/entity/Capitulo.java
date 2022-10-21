@@ -28,8 +28,10 @@ public class Capitulo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idCapitulo")
-    private Integer idCapitulo;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Capitulo")
+    @SequenceGenerator(name = "generator_Capitulo", sequenceName = "seq_Capitulo", allocationSize = 1)
+    @Column(name = "idcapitulo")
+    private Integer idcapitulo;
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;

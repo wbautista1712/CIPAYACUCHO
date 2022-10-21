@@ -28,8 +28,10 @@ public class CategoriaCIP implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idCategoriaCIP")
-    private Integer idCategoriaCIP;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Categoria_CIP")
+    @SequenceGenerator(name = "generator_Categoria_CIP", sequenceName = "seq_Categoria_CIP", allocationSize = 1)
+    @Column(name = "idcategoriacip")
+    private Integer idcategoriacip;
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)

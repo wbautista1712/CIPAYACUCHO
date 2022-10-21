@@ -29,17 +29,19 @@ public class Distrito implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idDistrito")
-    private String idDistrito;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Distrito")
+    @SequenceGenerator(name = "generator_Distrito", sequenceName = "seq_Distrito", allocationSize = 1)
+    @Column(name = "iddistrito")
+    private String iddistrito;
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDistrito")
-    private Collection<Usuario> usuarioCollection;
 
+    @Column(name = "idprovincia")
+    private String idprovincia;
 
 
 }

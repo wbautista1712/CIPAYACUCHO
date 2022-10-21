@@ -35,13 +35,8 @@ public class PagoController implements Serializable {
     @GetMapping(value = "/obtenerPago")
     public ResponseEntity<List<Pago>> obtenerPago() {
         LOGGER.info("obtenerPago " );
-
         List<Pago> result = this.pagoService.getAll();
         LOGGER.info("result " + result.size());
-
-
-
         return ResponseEntity.ok().body(result);
-
     }
 }

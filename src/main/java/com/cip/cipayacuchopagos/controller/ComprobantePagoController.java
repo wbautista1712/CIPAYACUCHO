@@ -10,12 +10,10 @@ import com.cip.cipayacuchopagos.service.ComprobantePagoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 /**
@@ -24,7 +22,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(path = "/api/wmsmysql")
+@RequestMapping(path = "/api/cipayacucho")
 @CrossOrigin(origins = "*")
 
 public class ComprobantePagoController implements Serializable {
@@ -41,9 +39,13 @@ public class ComprobantePagoController implements Serializable {
         List<ComprobantePago> result = this.comprobantePagoService.getAll();
         LOGGER.info("result " + result.size());
 
-
-
         return ResponseEntity.ok().body(result);
 
+    }
+
+    @PostMapping(value = "/crearComprobantePago")
+    public ResponseEntity<?> crearComprobantePago(@Valid @RequestBody ComprobantePago comprobantePago) {
+        comprobantePagoService.save(comprobantePago);
+        return new ResponseEntity<>("Insertado correctamente", HttpStatus.OK);
     }
 }

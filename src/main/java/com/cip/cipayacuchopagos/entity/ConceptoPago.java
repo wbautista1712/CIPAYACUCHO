@@ -31,6 +31,8 @@ public class ConceptoPago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Pago")
+    @SequenceGenerator(name = "generator_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
     @Column(name = "idConceptoPago")
     private Integer idConceptoPago;
     @Basic(optional = false)
@@ -40,7 +42,7 @@ public class ConceptoPago implements Serializable {
     @Column(name = "fechaCreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+
     @Basic(optional = false)
     @Column(name = "montoUnitario")
     private BigDecimal montoUnitario;

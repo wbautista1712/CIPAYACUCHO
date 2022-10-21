@@ -57,9 +57,7 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @JoinColumn(name = "idCategoriaCIP", referencedColumnName = "idCategoriaCIP")
-    @ManyToOne(optional = false)
-    private CategoriaCIP idCategoriaCIP;
+
 
 
 

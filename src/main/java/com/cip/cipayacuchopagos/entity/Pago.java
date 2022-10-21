@@ -37,7 +37,7 @@ public class Pago implements Serializable {
     @Column(name = "fechaPago")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPago;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+
     @Basic(optional = false)
     @Column(name = "montoTotal")
     private BigDecimal montoTotal;

@@ -23,14 +23,16 @@ import java.util.Collection;
 @Data
 @ToString
 @RequiredArgsConstructor
-@Table(name = "ComprobantePago", schema = "dbo")
+@Table(name = "comprobantepago", schema = "dbo")
 
 public class ComprobantePago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idComprobantePago")
-    private Integer idComprobantePago;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Pago")
+    @SequenceGenerator(name = "generator_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
+    @Column(name = "idcomprobantepago")
+    private Integer idcomprobantepago;
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
