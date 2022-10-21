@@ -23,16 +23,16 @@ import java.math.BigDecimal;
 @Data
 @ToString
 @RequiredArgsConstructor
-@Table(name = "DetallePago", schema = "dbo")
+@Table(name = "Detallepago", schema = "dbo")
 
 public class DetallePago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Pago")
-    @SequenceGenerator(name = "generator_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
-    @Column(name = "idDetallePago")
-    private Integer idDetallePago;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Detalle_Pago")
+    @SequenceGenerator(name = "generator_Detalle_Pago", sequenceName = "seq_Detalle_Pago", allocationSize = 1)
+    @Column(name = "iddetallepago")
+    private Integer iddetallepago;
     @Basic(optional = false)
     @Column(name = "cantidad")
     private int cantidad;
@@ -44,7 +44,9 @@ public class DetallePago implements Serializable {
     @Column(name = "estado")
     private boolean estado;
 
+    @Column(name = "idconceptopago")
+    private Integer idConceptoPago;
 
-
-    
+    @Column(name = "idpago")
+    private Integer idpago;
 }

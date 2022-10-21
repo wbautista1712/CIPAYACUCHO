@@ -6,16 +6,16 @@
 package com.cip.cipayacuchopagos.controller;
 
 import com.cip.cipayacuchopagos.entity.Pago;
+import com.cip.cipayacuchopagos.entity.Usuario;
 import com.cip.cipayacuchopagos.service.PagoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 /**
@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(path = "/api/wmsmysql")
+@RequestMapping(path = "/api/cipayacucho")
 @CrossOrigin(origins = "*")
 
 public class PagoController implements Serializable {
@@ -38,5 +38,12 @@ public class PagoController implements Serializable {
         List<Pago> result = this.pagoService.getAll();
         LOGGER.info("result " + result.size());
         return ResponseEntity.ok().body(result);
+    }
+
+    @PostMapping(value = "/crearPago")
+    public ResponseEntity<?> crearPago(@Valid @RequestBody Pago pago) {
+        LOGGER.info("crearPago " + pago.toString());
+        pagoService.save(pago);
+        return new ResponseEntity<>("Insertado correctamente", HttpStatus.OK);
     }
 }

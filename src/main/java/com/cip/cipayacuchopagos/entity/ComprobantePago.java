@@ -29,8 +29,8 @@ public class ComprobantePago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Pago")
-    @SequenceGenerator(name = "generator_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Comprobante_Pago")
+    @SequenceGenerator(name = "generator_Comprobante_Pago", sequenceName = "seq_Comprobante_Pago", allocationSize = 1)
     @Column(name = "idcomprobantepago")
     private Integer idcomprobantepago;
     @Column(name = "descripcion")

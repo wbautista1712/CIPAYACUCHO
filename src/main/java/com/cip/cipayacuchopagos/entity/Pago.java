@@ -5,6 +5,7 @@
  */
 package com.cip.cipayacuchopagos.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,30 +32,33 @@ public class Pago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idPago")
-    private Integer idPago;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_Pago")
+    @SequenceGenerator(name = "generator_Pago", sequenceName = "seq_Pago", allocationSize = 1)
+    @Column(name = "idpago")
+    private Integer idpago;
     @Basic(optional = false)
-    @Column(name = "fechaPago")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
+    @Column(name = "fechapago")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaPago;
+    private Date fechapago;
 
     @Basic(optional = false)
-    @Column(name = "montoTotal")
-    private BigDecimal montoTotal;
+    @Column(name = "montototal")
+    private BigDecimal montototal;
     @Basic(optional = false)
     @Column(name = "numeracion")
     private String numeracion;
     @Basic(optional = false)
-    @Column(name = "codigoQR")
-    private String codigoQR;
+    @Column(name = "codigoqr")
+    private String codigoqr;
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
-    @JoinColumn(name = "idComprobantePago", referencedColumnName = "idComprobantePago")
-    @ManyToOne(optional = false)
-    private ComprobantePago idComprobantePago;
 
-
+    @Column(name = "idcomprobantepago")
+    private Integer idcomprobantepago;
+    @Column(name = "idusuario")
+    private Integer idusuario;
 }
