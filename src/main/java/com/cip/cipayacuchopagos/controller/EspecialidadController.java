@@ -5,7 +5,6 @@
  */
 package com.cip.cipayacuchopagos.controller;
 
-import com.cip.cipayacuchopagos.entity.Capitulo;
 import com.cip.cipayacuchopagos.entity.Especialidad;
 import com.cip.cipayacuchopagos.service.EspecialidadService;
 import org.apache.logging.log4j.LogManager;

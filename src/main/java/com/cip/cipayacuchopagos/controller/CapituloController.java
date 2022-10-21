@@ -6,7 +6,6 @@
 package com.cip.cipayacuchopagos.controller;
 
 import com.cip.cipayacuchopagos.entity.Capitulo;
-import com.cip.cipayacuchopagos.entity.ComprobantePago;
 import com.cip.cipayacuchopagos.service.CapituloService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

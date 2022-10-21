@@ -6,7 +6,6 @@
 package com.cip.cipayacuchopagos.controller;
 
 import com.cip.cipayacuchopagos.entity.Departamento;
-import com.cip.cipayacuchopagos.entity.Distrito;
 import com.cip.cipayacuchopagos.service.DepartamentoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

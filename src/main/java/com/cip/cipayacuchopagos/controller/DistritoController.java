@@ -5,7 +5,6 @@
  */
 package com.cip.cipayacuchopagos.controller;
 
-import com.cip.cipayacuchopagos.entity.ComprobantePago;
 import com.cip.cipayacuchopagos.entity.Distrito;
 import com.cip.cipayacuchopagos.service.DistritoService;
 import org.apache.logging.log4j.LogManager;
