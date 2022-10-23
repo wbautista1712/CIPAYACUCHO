@@ -5,6 +5,11 @@
  */
 package com.cip.cipayacuchopagos.repository;
 
+import com.cip.cipayacuchopagos.dto.UsuarioDto;
+import com.cip.cipayacuchopagos.entity.Usuario;
+
+import java.util.List;
+
 /**
  *
  * @author Arango
@@ -12,6 +17,9 @@ package com.cip.cipayacuchopagos.repository;
 
 public interface UsuarioRepositoryCustom {
 
+    public Long saveUsuario(Usuario usuario);
+    public void updateUsuario(Usuario usuario);
 
+    public List<UsuarioDto> getUsuarioRol();
     
 }

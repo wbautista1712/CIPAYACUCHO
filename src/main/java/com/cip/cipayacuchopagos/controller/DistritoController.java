@@ -45,7 +45,7 @@ public class DistritoController implements Serializable {
 
     @PostMapping(value = "/crearDistrito")
     public ResponseEntity<?> crearDistrito(@Valid @RequestBody Distrito distrito) {
-        distritoService.save(distrito);
+        this.distritoService.save(distrito);
         return new ResponseEntity<>("Insertado correctamente", HttpStatus.OK);
     }
 }

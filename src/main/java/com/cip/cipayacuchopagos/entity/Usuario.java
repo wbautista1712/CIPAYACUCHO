@@ -10,7 +10,31 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 /**
  *
  * @author Arango
@@ -43,7 +67,7 @@ public class Usuario implements Serializable {
     private String nombres;
     @Basic(optional = false)
     @Column(name = "nrodocumento")
-    private String nrodocumento;
+    private String username;
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
@@ -53,9 +77,7 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "direccion")
     private String direccion;
-    @Basic(optional = false)
-    @Column(name = "clave")
-    private String clave;
+
     @Basic(optional = false)
     @Column(name = "estado")
     private boolean estado;
@@ -71,4 +93,15 @@ public class Usuario implements Serializable {
 
     @Column(name = "idtipodocumento")
     private Integer idTipoDocumento;
+
+
+
+    @Column(length = 60)
+    private String password;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "idusuario"), inverseJoinColumns = @JoinColumn(name = "idrol"), uniqueConstraints = {
+            @UniqueConstraint(columnNames = { "idusuario", "idrol" }) })
+    private List<Rol> roles;
 }
