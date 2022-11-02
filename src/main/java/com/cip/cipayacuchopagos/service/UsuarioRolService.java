@@ -1,7 +1,6 @@
 package com.cip.cipayacuchopagos.service;
 
 
-import com.cip.cipayacuchopagos.entity.Usuario;
 import com.cip.cipayacuchopagos.entity.UsuarioRol;
 
 public interface UsuarioRolService extends GenericService<UsuarioRol, Integer>  {
