@@ -8,6 +8,7 @@ package com.cip.cipayacuchopagos.repository;
 import com.cip.cipayacuchopagos.dto.UsuarioDto;
 import com.cip.cipayacuchopagos.entity.Usuario;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 
 public interface UsuarioRepositoryCustom {
 
-    public Long saveUsuario(Usuario usuario);
+    public Integer saveUsuario(Usuario usuario) 	throws SQLException;
     public void updateUsuario(Usuario usuario);
 
     public List<UsuarioDto> getUsuarioRol();

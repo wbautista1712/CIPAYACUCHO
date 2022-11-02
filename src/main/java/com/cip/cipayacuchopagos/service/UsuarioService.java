@@ -10,6 +10,7 @@ import com.cip.cipayacuchopagos.entity.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public interface UsuarioService extends GenericService<Usuario, Integer>   {
 
     public void delete(Long id);
 
-    public Long saveUsuario(Usuario usuario);
+    public Integer saveUsuario(Usuario usuario) throws SQLException;
 
     public void updateUsuario(Usuario usuario);
 

@@ -56,6 +56,7 @@ public class Usuario implements Serializable {
     @SequenceGenerator(name = "generator_Usuario", sequenceName = "seq_Usuario", allocationSize = 1)
     @Column(name = "idusuario")
     private Integer idusuario;
+
     @Basic(optional = false)
     @Column(name = "appaterno")
     private String appaterno;
@@ -95,13 +96,12 @@ public class Usuario implements Serializable {
     private Integer idTipoDocumento;
 
 
-
-    @Column(length = 60)
+    @Column(name = "clave")
     private String password;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "idusuario"), inverseJoinColumns = @JoinColumn(name = "idrol"), uniqueConstraints = {
+    @JoinTable(name = "usuariorol", joinColumns = @JoinColumn(name = "idusuario"), inverseJoinColumns = @JoinColumn(name = "idrol"), uniqueConstraints = {
             @UniqueConstraint(columnNames = { "idusuario", "idrol" }) })
     private List<Rol> roles;
 }

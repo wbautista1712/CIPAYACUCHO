@@ -25,6 +25,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,7 +130,7 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario, Integer> imp
     }
 
     @Secured({"ROLE_ADMIN"})
-    public Long saveUsuario(Usuario usuario) {
+    public Integer saveUsuario(Usuario usuario) throws SQLException {
         return usuarioDao.saveUsuario(usuario);
     }
 

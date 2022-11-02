@@ -4,30 +4,23 @@
  * and open the template in the editor.
  */
 package com.cip.cipayacuchopagos.repository.impl;
-import java.sql.PreparedStatement;
-import java.util.List;
-
-import javax.transaction.Transactional;
 
 import com.cip.cipayacuchopagos.dto.UsuarioDto;
 import com.cip.cipayacuchopagos.entity.Usuario;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
-
-
 import com.cip.cipayacuchopagos.repository.UsuarioRepositoryCustom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import javax.transaction.Transactional;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 /**
  *
  * @author Arango
@@ -41,41 +34,68 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
 
 
     @Override
-    public Long saveUsuario(Usuario usuario) {
-        // TODO Auto-generated method stub
-        String INSERT_MESSAGE_SQL = "INSERT INTO pmm.usuario (apPaterno,apMaterno,nombres,email,password,estado,username) VALUES (?,?,?,?,?,?,?) ";
+    public Integer saveUsuario(Usuario usuario) throws SQLException {
+        LOGGER.info(this.getClass().getName() + "." + new Exception().getStackTrace()[0].getMethodName());
+        Integer rpta = null;
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(INSERT_MESSAGE_SQL, new String[] { "idUsuario" });
+        DataSource ds = jdbcTemplate.getDataSource();
+        Connection conn = null;
+        CallableStatement csmt = null;
 
-            ps.setString(1, usuario.getAppaterno().toUpperCase());
-            ps.setString(2, usuario.getApmaterno().toUpperCase());
-            ps.setString(3, usuario.getNombres().toUpperCase());
-            ps.setString(4, usuario.getEmail());
-            ps.setString(5, usuario.getPassword());
-            ps.setBoolean(6, usuario.isEstado());
-          //  ps.setString(7, usuario.getUsername());
+        try {
+            conn = ds.getConnection();
+            conn.setAutoCommit(false);
+            csmt = conn.prepareCall("{call dbo.uspInsertarUsuario(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
-            return ps;
 
-        }, keyHolder);
+            csmt.setString(1, usuario.getAppaterno().toUpperCase());
+            csmt.setString(2, usuario.getApmaterno().toUpperCase());
+            csmt.setString(3, usuario.getNombres().toUpperCase());
+            csmt.setInt(4, usuario.getIdTipoDocumento());
+            csmt.setString(5, usuario.getUsername());
+            csmt.setString(6, usuario.getEmail());
+            csmt.setString(7, usuario.getCelular());
+            csmt.setString(8, usuario.getDireccion());
+            csmt.setString(9, usuario.getPassword());
+            csmt.setInt(10, usuario.getIddistrito());
+            csmt.setInt(11, usuario.getIdcategoriacip());
+            csmt.setInt(12, usuario.getIdespecialidad());
+            csmt.setBoolean(13, usuario.isEstado());
+            csmt.registerOutParameter(14, java.sql.Types.INTEGER);
 
-        LOGGER.info("id recupera usuario");
 
-        return keyHolder.getKey().longValue();
+            csmt.execute();
+            rpta = csmt.getInt(14);
+            LOGGER.info("GRABANDO STORED PROCEDURE");
+            LOGGER.info("DATOS SALIDA dbo.uspInsertarUsuario ---> RESULTADO: " + rpta);
+
+            if (rpta >= 1) {
+                conn.commit();
+            } else {
+                conn.rollback();
+            }
+        } catch (Exception ex) {
+            conn.rollback();
+            ex.printStackTrace();
+            LOGGER.error("Error: ", ex);
+            return rpta;
+        } finally {
+            csmt.close();
+            conn.close();
+        }
+        return rpta;
     }
 
     public void updateUsuario(Usuario usuario) {
         LOGGER.info("getAppaterno "+   usuario.getAppaterno());
         LOGGER.info("getApmaterno "+   usuario.getApmaterno());
 		/*  this.jdbcTemplate.update(
-	                " UPDATE  cuadratura.usuario x  set x.apPaterno  = ? , "
+	                " UPDATE  dbo.usuario x  set x.apPaterno  = ? , "
 	                + " x.apMaterno  =  ? , x.nombres  =  ? "
 	                + " WHERE  x.idUsuario =  ? ",
 	                usuario.getAppaterno(), usuario.getApmaterno(),  usuario.getNombres(), usuario.getIdusuario());
 		  */
-        String sql = " UPDATE  pmm.usuario x  set x.apPaterno  = ? , "
+        String sql = " UPDATE  dbo.usuario x  set x.apPaterno  = ? , "
                 + " x.apMaterno  =  ? , x.nombres  =  ? "
                 + " WHERE  x.idUsuario =  ? ";
 
@@ -88,9 +108,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
     public   List<UsuarioDto> getUsuarioRol(){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT U.idUsuario,U.apPaterno, U.apMaterno, U.nombres, U.email, U.username, R.idRol, R.nombreRol "
-                + "FROM pmm.usuario U "
-                + "INNER JOIN pmm.usuario_rol UR ON U.idUsuario=UR.idUsuario "
-                + "INNER JOIN pmm.rol R ON UR.idRol=R.idRol ");
+                + "FROM dbo.usuario U "
+                + "INNER JOIN dbo.usuariorol UR ON U.idusuario=UR.idusuario "
+                + "INNER JOIN dbo.rol R ON UR.idrol=R.idrol ");
         LOGGER.info(sb.toString());
 
         List<UsuarioDto> customers = jdbcTemplate.query(

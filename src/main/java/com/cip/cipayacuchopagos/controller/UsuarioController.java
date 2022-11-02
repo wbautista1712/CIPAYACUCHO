@@ -6,25 +6,9 @@
 package com.cip.cipayacuchopagos.controller;
 
 import com.cip.cipayacuchopagos.entity.Usuario;
+import com.cip.cipayacuchopagos.entity.UsuarioRol;
+import com.cip.cipayacuchopagos.service.UsuarioRolService;
 import com.cip.cipayacuchopagos.service.UsuarioService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,21 +18,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 /**
  *
  * @author Arango
@@ -62,8 +42,8 @@ public class UsuarioController implements Serializable {
     @Autowired
     private UsuarioService usuarioService;
 
-
-
+    @Autowired
+    private UsuarioRolService usuarioRolService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -79,16 +59,50 @@ public class UsuarioController implements Serializable {
     }
 
     @PostMapping(value = "/crearUsuario")
-    public ResponseEntity<?> crearUsuario(@Valid @RequestBody Usuario usuario) {
-        LOGGER.info("crearUsuario " + usuario.toString());
-        usuarioService.save(usuario);
-        return new ResponseEntity<>("Insertado correctamente", HttpStatus.OK);
+    public ResponseEntity<?> crearUsuario(@Valid @RequestBody Usuario usuario, BindingResult result, @RequestParam Integer idRol) throws SQLException {
+        LOGGER.info(this.getClass().getName() + "." + new Exception().getStackTrace()[0].getMethodName());
+        passwordEncoder = new BCryptPasswordEncoder();
+        Usuario usuarioNew = null;
+        Map<String, Object> response = new HashMap<>();
+        Integer idUser = null;
+        UsuarioRol usuarioRol = new UsuarioRol();
+        if (result.hasErrors()) {
+
+            List<String> errors = result.getFieldErrors().stream()
+                    .map(err -> "El campo '" + err.getField() + "' " + err.getDefaultMessage())
+                    .collect(Collectors.toList());
+
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            LOGGER.info("crearUsuario idRol::.. "+idRol );
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            //usuarioNew = usuarioService.save(usuario);// cambiar aqui
+
+            idUser = this.usuarioService.saveUsuario(usuario).intValue();
+            LOGGER.info("idRol ===>> "+idRol);
+            LOGGER.info("idUser ===>> "+idUser);
+            usuarioRol.setIdRol(idRol);
+            usuarioRol.setIdUsuario(idUser);
+            this.usuarioRolService.save(usuarioRol);
+            LOGGER.info("fin::.. " );
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "El usuario ha sido creado con éxito!");
+        // response.put("cliente", usuarioNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
 
     @GetMapping("/usuarios")
     public List<Usuario> index() {
-        LOGGER.info("UsuarioController ");
+        LOGGER.info(this.getClass().getName() + "." + new Exception().getStackTrace()[0].getMethodName());
         return usuarioService.findAll();
     }
 
@@ -100,7 +114,7 @@ public class UsuarioController implements Serializable {
 
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<?> show(@PathVariable Long id) {
-
+        LOGGER.info(this.getClass().getName() + "." + new Exception().getStackTrace()[0].getMethodName());
         Usuario usuario = null;
         Map<String, Object> response = new HashMap<>();
 
@@ -119,7 +133,5 @@ public class UsuarioController implements Serializable {
 
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
-
-
 
 }
